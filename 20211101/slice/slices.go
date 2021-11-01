@@ -112,4 +112,34 @@ func main() {
 	fmt.Println(queue[1:])            //[2 3 4]
 	fmt.Println(queue[:len(queue)-1]) // [1 2 3]
 
+	// 多维切片
+	points := [][]int{}
+	points02 := make([][]int,0)
+	fmt.Printf("%T \n" ,points02)				// [][]int
+	points = append(points,[]int{1,2,3})
+	points = append(points,[]int{4,5,6})
+	points = append(points,[]int{7,8,9,10,11,12})
+	fmt.Println(points)
+	fmt.Println(points[2][3])			// 10
+
+	//数组的值的类型
+	slice01 := []int{1,2,3}
+	slice02 := slice01
+	// 对切片改变，那另外的变量是会改变的
+	slice02[0] = 100
+	fmt.Println(slice01)			// [100 2 3]
+	fmt.Println(slice02) //[100 2 3]
+
+	//数组是一个值类型，在go语言中，所有的值类型，在赋值的时候，是值传递
+	arrays01 := [3]int{1,2,3}
+	arrays02 := arrays01
+	arrays02[0] = 100
+	fmt.Println(arrays01)			// [1 2 3]
+	fmt.Println(arrays02)			//[100 2 3]
+
+
+	// 切片的排序
+
+
+
 }
