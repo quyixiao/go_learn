@@ -27,7 +27,7 @@ func main() {
 	fmt.Println(filepath.Join(dirpath, "abc", "dev")) ///private/var/folders/t7/75ts_gyx6h3g14vdt8xgdk3m0000gn/T/GoLand/abc/dev
 
 	// glob 是用来找文件的
-	fmt.Println(filepath.Glob("./*/*/*/*.java")) //[202111113/filepath/xxx/bb.java] <nil>
+	fmt.Println(filepath.Glob("./*/*/*/*.java")) //[20211113/filepath/xxx/bb.java] <nil>
 
 	//遍历一个目录下的所有文件
 	filepath.Walk(".", func(path string, fileinfo os.FileInfo, error error) error {
