@@ -18,6 +18,12 @@ func (self *ClassMember) copyMemberInfo(memberInfo *classfile.MemberInfo) {
 	self.descriptor = memberInfo.Descriptor()
 }
 
+
+// getters
+func (self *Class) Name() string {
+	return self.name
+}
+
 func (self *ClassMember) IsPublic() bool {
 	return 0 != self.accessFlags&ACC_PUBLIC
 }

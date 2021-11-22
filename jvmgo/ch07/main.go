@@ -24,9 +24,10 @@ func main() {
 		helpFlag:    false,
 		versionFlag: false,
 		cpOption:    "/Users/quyixiao/go/src/go_learn/jvmgo/ch07",
-		class:       "MyObject",
+		class:       "InvokeDemo",
 		XjreOption:  "/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre",
 		args:        []string{},
+		verboseClassFlag: true,
 	}
 	fmt.Printf("%#v \n", cmd)
 	if cmd.versionFlag {
@@ -41,12 +42,13 @@ func main() {
 
 func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
-	classLoader := heap.NewClassLoader(cp)
+	classLoader := heap.NewClassLoader(cp, cmd.verboseClassFlag)
+
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	mainClass := classLoader.LoadClass(className)
 	mainMethod := mainClass.GetMainMethod()
 	if mainMethod != nil {
-		interpret(mainMethod)
+		interpret(mainMethod, cmd.verboseInstFlag)
 	} else {
 		fmt.Printf("Main method not found in class %s\n", cmd.class)
 	}

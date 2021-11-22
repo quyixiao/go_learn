@@ -73,7 +73,6 @@ func (self *OperandStack) PushRef(ref *heap.Object) {
 	self.size++
 }
 
-
 //弹出引用后，把Slot结构体的ref字段设置成nil，这样 做是为了帮助Go的垃圾收集器回收Object结构体实例。
 func (self *OperandStack) PopRef() *heap.Object {
 	self.size--
@@ -81,8 +80,6 @@ func (self *OperandStack) PopRef() *heap.Object {
 	self.slots[self.size].ref = nil
 	return ref
 }
-
-
 
 func (self *OperandStack) PushSlot(slot Slot) {
 	self.slots[self.size] = slot
@@ -93,3 +90,6 @@ func (self *OperandStack) PopSlot() Slot {
 	return self.slots[self.size]
 }
 
+func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
+	return self.slots[self.size-1-n].ref
+}

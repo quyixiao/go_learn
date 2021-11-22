@@ -18,6 +18,7 @@ type Class struct {
 	instanceSlotCount uint
 	staticSlotCount   uint
 	staticVars        Slots
+	initStarted       bool
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -97,4 +98,52 @@ func (self *Class) getStaticMethod(name, descriptor string) *Method {
 //这里只是调用了Object结构体的newObject()方法
 func (self *Class) NewObject() *Object {
 	return newObject(self)
+}
+
+
+func (self *Class) InitStarted() bool {
+	return self.initStarted
+}
+
+
+func (self *Class) StartInit() {
+	self.initStarted = true
+}
+
+func (self *Class) GetClinitMethod() *Method {
+	return self.getStaticMethod("<clinit>", "()V")
+}
+
+func (self *Class) SuperClass() *Class {
+	return self.superClass
+}
+
+
+// self implements iface
+func (self *Class) IsImplements(iface *Class) bool {
+	for c := self; c != nil; c = c.superClass {
+		for _, i := range c.interfaces {
+			if i == iface || i.isSubInterfaceOf(iface) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+
+// c extends self
+func (self *Class) IsSuperClassOf(other *Class) bool {
+	return other.IsSubClassOf(self)
+}
+
+
+// self extends c
+func (self *Class) IsSubClassOf(other *Class) bool {
+	for c := self.superClass; c != nil; c = c.superClass {
+		if c == other {
+			return true
+		}
+	}
+	return false
 }

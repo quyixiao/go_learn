@@ -15,15 +15,18 @@ type ClassLoader struct {
 	cp       *classpath.Classpath // ClassLoader依赖Classpath来搜索和读取class文件，cp字段保存 Classpath指针
 	classMap map[string]*Class    // loaded classes	//classMap字段记录已经加载的类数据，key是类的完 全限定名。
 	//方法区一直只是个抽象的概念，现在可 以把classMap字段当作方法区的具体实现。
+	verboseFlag bool
 }
 
 //NewClassLoader()函数 创建ClassLoader实例
-func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
+func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 	return &ClassLoader{
-		cp:       cp,
-		classMap: make(map[string]*Class),
+		cp:          cp,
+		verboseFlag: verboseFlag,
+		classMap:    make(map[string]*Class),
 	}
 }
+
 
 //首先找到class文 件并把数据读取到内存;然后解析class文件，生成虚拟机可以使用的类数据，并放入方法区;最后进行链接。
 //LoadClass()方法把类数据加载到方法区
@@ -41,7 +44,11 @@ func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 	data, entry := self.readClass(name)
 	class := self.defineClass(data)
 	link(class)
-	fmt.Printf("[Loaded %s from %s]\n", name, entry)
+
+	if self.verboseFlag {
+		fmt.Printf("[Loaded %s from %s]\n", name, entry)
+	}
+
 	return class
 }
 

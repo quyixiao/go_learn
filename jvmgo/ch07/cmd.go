@@ -13,6 +13,8 @@ type Cmd struct {
 	class       string
 	XjreOption  string
 	args        []string
+	verboseClassFlag bool
+	verboseInstFlag bool
 }
 
 func printUsage() {
