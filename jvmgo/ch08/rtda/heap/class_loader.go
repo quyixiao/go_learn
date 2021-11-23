@@ -36,8 +36,31 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 		// already loaded
 		return class
 	}
+	if name[0] == '[' {
+		// array class
+		//这里增加了类型判断，如果要加载的类是数组类，则调用新的 loadArrayClass()方法，否则还按照原来的逻辑
+		return self.loadArrayClass(name)
+	}
 
 	return self.loadNonArrayClass(name)
+}
+
+
+func (self *ClassLoader) loadArrayClass(name string) *Class {
+	class := &Class{
+		accessFlags: ACC_PUBLIC, // todo
+		name:        name,
+		loader:      self,
+		initStarted: true,//因为数组类不需要 初始化，所以把initStarted字段设置成true。
+		//数组类的超类是 java.lang.Object，并且实现了java.lang.Cloneable和java.io.Serializable 接口。
+		superClass:  self.LoadClass("java/lang/Object"),
+		interfaces: []*Class{
+			self.LoadClass("java/lang/Cloneable"),
+			self.LoadClass("java/io/Serializable"),
+		},
+	}
+	self.classMap[name] = class
+	return class
 }
 
 func (self *ClassLoader) loadNonArrayClass(name string) *Class {
@@ -191,8 +214,11 @@ func initStaticFinalVar(class *Class, field *Field) {
 		case "D":
 			val := cp.GetConstant(cpIndex).(float64)
 			vars.SetDouble(slotId, val)
+			//这里增加了字符串类型静态常量的初始化逻辑，代码比较简 单，就不多解释了。至此，字符串相关的工作都做完了，下面进行 测试。
 		case "Ljava/lang/String;":
-			panic("todo")
+			goStr := cp.GetConstant(cpIndex).(string)
+			jStr := JString(class.Loader(), goStr)
+			vars.SetRef(slotId, jStr)
 		}
 	}
 }

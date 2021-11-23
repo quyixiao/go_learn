@@ -23,8 +23,8 @@ func main() {
 	cmd := &Cmd{
 		helpFlag:    false,
 		versionFlag: false,
-		cpOption:    "/Users/quyixiao/go/src/go_learn/jvmgo/ch07",
-		class:       "InvokeDemo",
+		cpOption:    "/Users/quyixiao/go/src/go_learn/jvmgo/ch08",
+		class:       "HelloWord",
 		XjreOption:  "/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre",
 		args:        []string{},
 		verboseClassFlag: true,
@@ -48,7 +48,7 @@ func startJVM(cmd *Cmd) {
 	mainClass := classLoader.LoadClass(className)
 	mainMethod := mainClass.GetMainMethod()
 	if mainMethod != nil {
-		interpret(mainMethod, cmd.verboseInstFlag)
+		interpret(mainMethod, cmd.verboseInstFlag, cmd.args)
 	} else {
 		fmt.Printf("Main method not found in class %s\n", cmd.class)
 	}
