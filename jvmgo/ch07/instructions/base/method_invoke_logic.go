@@ -25,10 +25,13 @@ func InvokeMethod(invokerFrame *rtda.Frame, method *heap.Method) {
 	}
 
 	// hack!
+	//由于Object类是其他所有类的超类，所以这会导致Java虚拟机 崩溃。解决办法是修改InvokeMethod()函数
 	if method.IsNative() {
 		if method.Name() == "registerNatives" {
 			thread.PopFrame()
 		} else {
+			//让它跳过所 有registerNatives()方法
+			//如果遇到其他本地方法，直接调用panic()函数终止程序执行 即可。
 			panic(fmt.Sprintf("native method: %v.%v%v\n",
 				method.Class().Name(), method.Name(), method.Descriptor()))
 		}

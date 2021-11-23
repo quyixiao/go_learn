@@ -18,7 +18,7 @@ type Class struct {
 	instanceSlotCount uint
 	staticSlotCount   uint
 	staticVars        Slots
-	initStarted       bool
+	initStarted       bool		//为了判断类是否已经初始化，需要给Class结构体添加一个字段
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -100,12 +100,12 @@ func (self *Class) NewObject() *Object {
 	return newObject(self)
 }
 
-
+//InitStarted()是Getter方法，返回initStarted字段值
 func (self *Class) InitStarted() bool {
 	return self.initStarted
 }
 
-
+//StartInit()方 法把initStarted字段设置成true。
 func (self *Class) StartInit() {
 	self.initStarted = true
 }

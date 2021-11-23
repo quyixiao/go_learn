@@ -16,7 +16,12 @@ func (self *PUT_STATIC) Execute(frame *rtda.Frame) {
 	//先拿到当前方法、当前类和当前常量池，然后解析字段符号引
 	//用。如果声明字段的类还没有被初始化，则需要先初始化该类
 	class := field.Class()
-	// todo: init class
+	if !class.InitStarted() {
+		frame.RevertNextPC()
+		base.InitClass(frame.Thread(), class)
+		return
+	}
+
 
 	//如果解析后的字段是实例字段而非静态字段，则抛出 IncompatibleClassChangeError异常。
 	if !field.IsStatic() {
