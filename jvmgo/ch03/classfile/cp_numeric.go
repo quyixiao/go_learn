@@ -8,6 +8,9 @@ CONSTANT_Integer_info {
     u4 bytes;
 }
 */
+
+
+
 type ConstantIntegerInfo struct {
 	val int32
 }
@@ -19,6 +22,7 @@ func (self *ConstantIntegerInfo) readInfo(reader *ClassReader) {
 func (self *ConstantIntegerInfo) Value() int32 {
 	return self.val
 }
+
 
 /*
 CONSTANT_Float_info {

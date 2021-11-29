@@ -5,6 +5,9 @@ import "go_learn/jvmgo/ch11/rtda"
 import "go_learn/jvmgo/ch11/rtda/heap"
 
 // Invoke instance method; dispatch based on class
+// invokevirtual 指令用于调用对象的实例方法，根据对象的实际类型进行分派（虚分派），这也是java语言中最常见的分派方式
+// 指令的indexbyte操作数，必须表示指向常量池表的有效索引，该索引所引用的常量池项，其类型必须是CONSTANT_Methodref。
+//
 type INVOKE_VIRTUAL struct{ base.Index16Instruction }
 
 func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {

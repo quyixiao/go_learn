@@ -5,6 +5,10 @@ import "go_learn/jvmgo/ch11/rtda"
 
 // Convert double to float
 type D2F struct{ base.NoOperandsInstruction }
+// Convert double to int
+type D2I struct{ base.NoOperandsInstruction }
+// Convert double to long
+type D2L struct{ base.NoOperandsInstruction }
 
 func (self *D2F) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -13,8 +17,6 @@ func (self *D2F) Execute(frame *rtda.Frame) {
 	stack.PushFloat(f)
 }
 
-// Convert double to int
-type D2I struct{ base.NoOperandsInstruction }
 
 func (self *D2I) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -23,8 +25,7 @@ func (self *D2I) Execute(frame *rtda.Frame) {
 	stack.PushInt(i)
 }
 
-// Convert double to long
-type D2L struct{ base.NoOperandsInstruction }
+
 
 func (self *D2L) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

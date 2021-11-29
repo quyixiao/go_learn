@@ -23,6 +23,8 @@ highbyte4
 jump offsets...
 */
 // Access jump table by index and jump
+// 编译器使用tableswith 和lookupswith 指令来生成switch语句的编译代码，tableswitch指令用于表示switch结构中的case语句块，
+// 它可以高效的从索引表中确定case语句块的分支
 type TABLE_SWITCH struct {
 	defaultOffset int32
 	low           int32

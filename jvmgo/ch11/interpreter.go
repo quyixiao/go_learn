@@ -17,6 +17,7 @@ func catchErr(thread *rtda.Thread) {
 	}
 }
 
+//修改之后interpret()函数简单了许多，直接调用loop()函数进 入循环即可。
 func loop(thread *rtda.Thread, logInst bool) {
 	reader := &base.BytecodeReader{}
 	for {

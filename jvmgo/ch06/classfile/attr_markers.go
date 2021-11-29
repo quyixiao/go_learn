@@ -12,8 +12,8 @@ type DeprecatedAttribute struct {
 
 /*
 Synthetic_attribute {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    u2 attribute_name_index;				用以表示字符串"Synthetic"
+    u4 attribute_length;					attribute_length固定为0
 }
 */
 type SyntheticAttribute struct {

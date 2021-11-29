@@ -5,6 +5,7 @@ import "go_learn/jvmgo/ch11/rtda"
 import "go_learn/jvmgo/ch11/rtda/heap"
 
 // Invoke interface method
+//invokeinterface 指令用于调用接口方法，它会在运行时搜索由特定的对象所实现的这个接口方法，并找到适合的方法进行调用
 type INVOKE_INTERFACE struct {
 	index uint
 	// count uint8

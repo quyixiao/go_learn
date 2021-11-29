@@ -4,6 +4,7 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Compare long
+// lcmp指令用于比较long变量
 type LCMP struct{ base.NoOperandsInstruction }
 
 func (self *LCMP) Execute(frame *rtda.Frame) {

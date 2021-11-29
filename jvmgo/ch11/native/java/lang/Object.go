@@ -25,20 +25,22 @@ func getClass(frame *rtda.Frame) {
 // ()I
 func hashCode(frame *rtda.Frame) {
 	this := frame.LocalVars().GetThis()
+	//把对象引用(Object结构体指针)转换成uintptr类型，然后强制 转换成int32推入操作数栈顶。
 	hash := int32(uintptr(unsafe.Pointer(this)))
 	frame.OperandStack().PushInt(hash)
 }
 
 // protected native Object clone() throws CloneNotSupportedException;
 // ()Ljava/lang/Object;
+//继续编辑Object.go，实现clone()方法
 func clone(frame *rtda.Frame) {
 	this := frame.LocalVars().GetThis()
-
+	//如果类没有实现Cloneable接口，则抛出CloneNotSupportedException异常
 	cloneable := this.Class().Loader().LoadClass("java/lang/Cloneable")
 	if !this.Class().IsImplements(cloneable) {
 		panic("java.lang.CloneNotSupportedException")
 	}
-
+	//否则调用Object结构体的 Clone()方法克隆对象，然后把对象副本引用推入操作数栈顶。
 	frame.OperandStack().PushRef(this.Clone())
 }
 

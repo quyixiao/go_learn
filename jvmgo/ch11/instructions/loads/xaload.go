@@ -5,6 +5,7 @@ import "go_learn/jvmgo/ch11/rtda"
 import "go_learn/jvmgo/ch11/rtda/heap"
 
 // Load reference from array
+// 加载指令从局部变量表获取变量，然后推入操作数栈顶
 type AALOAD struct{ base.NoOperandsInstruction }
 
 func (self *AALOAD) Execute(frame *rtda.Frame) {

@@ -4,6 +4,8 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Load reference from local variable
+// 加载指令从局部变量表获取变量，然后推入操作数栈顶。
+// aload系列指令 操作引用类型变量
 type ALOAD struct{ base.Index8Instruction }
 
 func (self *ALOAD) Execute(frame *rtda.Frame) {

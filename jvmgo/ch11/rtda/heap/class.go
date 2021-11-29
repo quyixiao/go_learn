@@ -12,7 +12,7 @@ type Class struct {
 	constantPool      *ConstantPool
 	fields            []*Field
 	methods           []*Method
-	sourceFile        string
+	sourceFile        string							//最后实现Class结构体的SourceFile()方法和Method结构体的 GetLineNumber()
 	loader            *ClassLoader
 	superClass        *Class
 	interfaces        []*Class
@@ -32,10 +32,12 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.constantPool = newConstantPool(class, cf.ConstantPool())
 	class.fields = newFields(class, cf.Fields())
 	class.methods = newMethods(class, cf.Methods())
-	class.sourceFile = getSourceFile(cf)
+	class.sourceFile = getSourceFile(cf)		//从class文件中读取源文件名
 	return class
 }
 
+//源文件名在ClassFile结构的属性表中， getSourceFile()函数提取这个信息
+//【注意】并不是每个class文件中都有源文件信息，这个因编译时 的编译器选项而异。
 func getSourceFile(cf *classfile.ClassFile) string {
 	if sfAttr := cf.SourceFileAttribute(); sfAttr != nil {
 		return sfAttr.FileName()

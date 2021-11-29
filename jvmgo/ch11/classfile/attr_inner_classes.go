@@ -13,11 +13,11 @@ InnerClasses_attribute {
 }
 */
 type InnerClassesAttribute struct {
-	classes []*InnerClassInfo
+	classes []*InnerClassInfo			//
 }
 
 type InnerClassInfo struct {
-	innerClassInfoIndex   uint16
+	innerClassInfoIndex   uint16				//
 	outerClassInfoIndex   uint16
 	innerNameIndex        uint16
 	innerClassAccessFlags uint16

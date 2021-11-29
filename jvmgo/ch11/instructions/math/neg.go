@@ -5,6 +5,8 @@ import "go_learn/jvmgo/ch11/rtda"
 
 // Negate double
 type DNEG struct{ base.NoOperandsInstruction }
+// Negate float
+type FNEG struct{ base.NoOperandsInstruction }
 
 func (self *DNEG) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -12,8 +14,7 @@ func (self *DNEG) Execute(frame *rtda.Frame) {
 	stack.PushDouble(-val)
 }
 
-// Negate float
-type FNEG struct{ base.NoOperandsInstruction }
+
 
 func (self *FNEG) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

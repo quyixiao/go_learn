@@ -5,6 +5,12 @@ import "go_learn/jvmgo/ch11/rtda"
 
 // Multiply double
 type DMUL struct{ base.NoOperandsInstruction }
+// Multiply float
+type FMUL struct{ base.NoOperandsInstruction }
+// Multiply int
+type IMUL struct{ base.NoOperandsInstruction }
+// Multiply long
+type LMUL struct{ base.NoOperandsInstruction }
 
 func (self *DMUL) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -14,8 +20,7 @@ func (self *DMUL) Execute(frame *rtda.Frame) {
 	stack.PushDouble(result)
 }
 
-// Multiply float
-type FMUL struct{ base.NoOperandsInstruction }
+
 
 func (self *FMUL) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -25,8 +30,7 @@ func (self *FMUL) Execute(frame *rtda.Frame) {
 	stack.PushFloat(result)
 }
 
-// Multiply int
-type IMUL struct{ base.NoOperandsInstruction }
+
 
 func (self *IMUL) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -36,8 +40,7 @@ func (self *IMUL) Execute(frame *rtda.Frame) {
 	stack.PushInt(result)
 }
 
-// Multiply long
-type LMUL struct{ base.NoOperandsInstruction }
+
 
 func (self *LMUL) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

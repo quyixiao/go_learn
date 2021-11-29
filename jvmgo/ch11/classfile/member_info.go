@@ -8,6 +8,9 @@ field_info {
     u2             attributes_count;
     attribute_info attributes[attributes_count];
 }
+
+
+
 method_info {
     u2             access_flags;
     u2             name_index;
@@ -91,6 +94,10 @@ func (self *MemberInfo) RuntimeVisibleAnnotationsAttributeData() []byte {
 func (self *MemberInfo) RuntimeVisibleParameterAnnotationsAttributeData() []byte {
 	return self.getUnparsedAttributeData("RuntimeVisibleParameterAnnotationsAttribute")
 }
+// AnnotationDefault 属性是个长度可变的属性，它出现在某些method_info结构体的属性表里，而那种method_info结构体，
+// 则用来表示注解类型中的元素，AnnotationDefault属性记录了由method_info结构所表示的那个元素的默认值，Java虚拟机默认值
+// 可供取用，以便合适的反射API能够将其提供给调用者。
+//
 func (self *MemberInfo) AnnotationDefaultAttributeData() []byte {
 	return self.getUnparsedAttributeData("AnnotationDefault")
 }

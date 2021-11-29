@@ -5,6 +5,12 @@ import "go_learn/jvmgo/ch11/rtda"
 
 // Divide double
 type DDIV struct{ base.NoOperandsInstruction }
+// Divide float
+type FDIV struct{ base.NoOperandsInstruction }
+// Divide int
+type IDIV struct{ base.NoOperandsInstruction }
+// Divide long
+type LDIV struct{ base.NoOperandsInstruction }
 
 func (self *DDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -14,8 +20,7 @@ func (self *DDIV) Execute(frame *rtda.Frame) {
 	stack.PushDouble(result)
 }
 
-// Divide float
-type FDIV struct{ base.NoOperandsInstruction }
+
 
 func (self *FDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -25,8 +30,7 @@ func (self *FDIV) Execute(frame *rtda.Frame) {
 	stack.PushFloat(result)
 }
 
-// Divide int
-type IDIV struct{ base.NoOperandsInstruction }
+
 
 func (self *IDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -40,8 +44,7 @@ func (self *IDIV) Execute(frame *rtda.Frame) {
 	stack.PushInt(result)
 }
 
-// Divide long
-type LDIV struct{ base.NoOperandsInstruction }
+
 
 func (self *LDIV) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

@@ -4,7 +4,13 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Convert float to double
+// f2x系列指令把float变量强制转换成其他类型;
 type F2D struct{ base.NoOperandsInstruction }
+// Convert float to int
+type F2I struct{ base.NoOperandsInstruction }
+// Convert float to long
+type F2L struct{ base.NoOperandsInstruction }
+
 
 func (self *F2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -13,9 +19,6 @@ func (self *F2D) Execute(frame *rtda.Frame) {
 	stack.PushDouble(d)
 }
 
-// Convert float to int
-type F2I struct{ base.NoOperandsInstruction }
-
 func (self *F2I) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	f := stack.PopFloat()
@@ -23,8 +26,7 @@ func (self *F2I) Execute(frame *rtda.Frame) {
 	stack.PushInt(i)
 }
 
-// Convert float to long
-type F2L struct{ base.NoOperandsInstruction }
+
 
 func (self *F2L) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

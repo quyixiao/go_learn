@@ -4,9 +4,9 @@ import "go_learn/jvmgo/ch11/rtda/heap"
 
 // stack frame
 type Frame struct {
-	lower        *Frame // stack is implemented as linked list
-	localVars    LocalVars
-	operandStack *OperandStack
+	lower        *Frame // stack is implemented as linked list ,lower字段用来实现链表数据结构
+	localVars    LocalVars					//localVars字段保存 局部变量表指针
+	operandStack *OperandStack				//operandStack字段保存操作数栈指针
 	thread       *Thread
 	method       *heap.Method
 	nextPC       int // the next instruction after the call

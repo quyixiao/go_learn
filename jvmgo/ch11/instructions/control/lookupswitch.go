@@ -6,15 +6,15 @@ import "go_learn/jvmgo/ch11/rtda"
 /*
 lookupswitch
 <0-3 byte pad>
-defaultbyte1
-defaultbyte2
-defaultbyte3
-defaultbyte4
-npairs1
-npairs2
-npairs3
-npairs4
-match-offset pairs...
+	defaultbyte1
+	defaultbyte2
+	defaultbyte3
+	defaultbyte4
+	npairs1
+	npairs2
+	npairs3
+	npairs4
+	match-offset pairs...
 */
 // Access jump table by key match and jump
 type LOOKUP_SWITCH struct {

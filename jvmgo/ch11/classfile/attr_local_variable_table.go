@@ -2,11 +2,11 @@ package classfile
 
 /*
 LocalVariableTable_attribute {
-    u2 attribute_name_index;
+    u2 attribute_name_index;			表示字符串"LocalVariableTable"
     u4 attribute_length;
     u2 local_variable_table_length;
     {   u2 start_pc;
-        u2 length;
+        u2 length;		也就是处于在偏移量大于等于start_pc且小于start_pc + length 的字节码所构成的范围内时，该局部变量表具备某个值
         u2 name_index;
         u2 descriptor_index;
         u2 index;

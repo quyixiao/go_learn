@@ -53,6 +53,9 @@ func (self *ConstantLongInfo) readInfo(reader *ClassReader) {
 	bytes := reader.readUint64()
 	self.val = int64(bytes)
 }
+
+
+
 func (self *ConstantLongInfo) Value() int64 {
 	return self.val
 }

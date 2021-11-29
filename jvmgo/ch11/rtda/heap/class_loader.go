@@ -28,7 +28,8 @@ func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 	loader.loadPrimitiveClasses()
 	return loader
 }
-
+//loadBasicClasses()函数先加载java.lang.Class类，这又会触发
+//java.lang.Object等类和接口的加载。然后遍历classMap，给已经加载 的每一个类关联类对象。
 func (self *ClassLoader) loadBasicClasses() {
 	jlClassClass := self.LoadClass("java/lang/Class")
 	for _, class := range self.classMap {

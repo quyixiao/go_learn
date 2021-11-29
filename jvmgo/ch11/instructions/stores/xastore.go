@@ -5,6 +5,7 @@ import "go_learn/jvmgo/ch11/rtda"
 import "go_learn/jvmgo/ch11/rtda/heap"
 
 // Store into reference array
+//和加载指令刚好相反，存储指令把变量从操作数栈顶弹出，然 后存入局部变量表
 type AASTORE struct{ base.NoOperandsInstruction }
 
 func (self *AASTORE) Execute(frame *rtda.Frame) {

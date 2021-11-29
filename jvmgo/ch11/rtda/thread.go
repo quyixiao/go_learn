@@ -51,6 +51,7 @@ func (self *Thread) IsStackEmpty() bool {
 	return self.stack.isEmpty()
 }
 func (self *Thread) ClearStack() {
+	//它调用了Stack结构体的clear()方法
 	self.stack.clear()
 }
 

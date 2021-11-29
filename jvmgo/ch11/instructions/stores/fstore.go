@@ -4,6 +4,7 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Store float into local variable
+// 和加载指令刚好相反，存储指令把变量从操作数栈顶弹出，然 后存入局部变量表
 type FSTORE struct{ base.Index8Instruction }
 
 func (self *FSTORE) Execute(frame *rtda.Frame) {

@@ -5,6 +5,8 @@ import "go_learn/jvmgo/ch11/rtda"
 
 // Boolean AND int
 type IAND struct{ base.NoOperandsInstruction }
+// Boolean AND long
+type LAND struct{ base.NoOperandsInstruction }
 
 func (self *IAND) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -14,8 +16,7 @@ func (self *IAND) Execute(frame *rtda.Frame) {
 	stack.PushInt(result)
 }
 
-// Boolean AND long
-type LAND struct{ base.NoOperandsInstruction }
+
 
 func (self *LAND) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

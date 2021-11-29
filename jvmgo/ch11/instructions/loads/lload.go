@@ -4,6 +4,7 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Load long from local variable
+//加载指令从局部变量表获取变量，然后推入操作数栈顶
 type LLOAD struct{ base.Index8Instruction }
 
 func (self *LLOAD) Execute(frame *rtda.Frame) {

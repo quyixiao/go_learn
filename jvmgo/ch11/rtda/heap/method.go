@@ -126,6 +126,9 @@ func (self *Method) ArgSlotCount() uint {
 	return self.argSlotCount
 }
 
+
+//FindExceptionHandler()方法调用 ExceptionTable.findExceptionHandler()方法搜索异常处理表，如果 能够找到对应的异常处理项，
+//则返回它的handlerPc字段，否则返 回–1
 func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
 	handler := self.exceptionTable.findExceptionHandler(exClass, pc)
 	if handler != nil {
@@ -133,6 +136,7 @@ func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
 	}
 	return -1
 }
+
 
 func (self *Method) GetLineNumber(pc int) int {
 	if self.IsNative() {

@@ -13,6 +13,7 @@ type JVM struct {
 	mainThread  *rtda.Thread
 }
 
+// newJVM()函数创建JVM结构体实例
 func newJVM(cmd *Cmd) *JVM {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	classLoader := heap.NewClassLoader(cp, cmd.verboseClassFlag)
@@ -23,17 +24,20 @@ func newJVM(cmd *Cmd) *JVM {
 	}
 }
 
+//start()方法先初始化VM类，然后执行主类的main()方法
 func (self *JVM) start() {
 	self.initVM()
 	self.execMain()
 }
 
+//initVM()先加载sun.mis.VM类，然后执行其类初始化方法
 func (self *JVM) initVM() {
 	vmClass := self.classLoader.LoadClass("sun/misc/VM")
 	base.InitClass(self.mainThread, vmClass)
 	interpret(self.mainThread, self.cmd.verboseInstFlag)
 }
 
+//execMain()方法先加载主类，然后执行其main()方法
 func (self *JVM) execMain() {
 	className := strings.Replace(self.cmd.class, ".", "/", -1)
 	mainClass := self.classLoader.LoadClass(className)
@@ -43,6 +47,9 @@ func (self *JVM) execMain() {
 		return
 	}
 
+
+	//在调 用main()方法之前，需要给它传递args参数，这是通过直接操作局 部变量表实现的。
+	//createArgsArray()方法把Go的[]string变量转换成 Java的字符串数组，代码是从interpreter.go文件中拷贝过来的
 	argsArr := self.createArgsArray()
 	frame := self.mainThread.NewFrame(mainMethod)
 	frame.LocalVars().SetRef(0, argsArr)

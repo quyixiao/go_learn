@@ -10,6 +10,7 @@ func (self *FCMPG) Execute(frame *rtda.Frame) {
 	_fcmp(frame, true)
 }
 
+//除了大于、等于、小于之外， 还有第4种结果:无法比较。fcmpg和fcmpl指令的区别就在于对第4 种结果的定义。
 type FCMPL struct{ base.NoOperandsInstruction }
 
 func (self *FCMPL) Execute(frame *rtda.Frame) {

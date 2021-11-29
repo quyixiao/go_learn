@@ -8,8 +8,8 @@ func main() {
 	cmd := &Cmd{
 		helpFlag:    false,
 		versionFlag: false,
-		cpOption:    "/Users/quyixiao/go/src/go_learn/jvmgo/ch11",
-		class:       "GetClassTest",
+		cpOption:    "/Users/quyixiao/go/src/go_learn/jvmgo/ch11/test",
+		class:       "GaussTest",
 		XjreOption:  "/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre",
 		args:        []string{},
 		verboseClassFlag: true,

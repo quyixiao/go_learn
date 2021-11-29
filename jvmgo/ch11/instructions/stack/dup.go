@@ -4,6 +4,7 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Duplicate the top operand stack value
+//dup系列指令复制栈顶变量
 type DUP struct{ base.NoOperandsInstruction }
 
 func (self *DUP) Execute(frame *rtda.Frame) {
@@ -14,6 +15,7 @@ func (self *DUP) Execute(frame *rtda.Frame) {
 }
 
 // Duplicate the top operand stack value and insert two values down
+//复制栈顶部一个字长的内容，然后将复制内容及原来弹出的两个字长的内容压入栈
 type DUP_X1 struct{ base.NoOperandsInstruction }
 
 func (self *DUP_X1) Execute(frame *rtda.Frame) {

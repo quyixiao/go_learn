@@ -5,6 +5,12 @@ import "go_learn/jvmgo/ch11/rtda"
 
 // Add double
 type DADD struct{ base.NoOperandsInstruction }
+// Add float
+type FADD struct{ base.NoOperandsInstruction }
+// Add int
+type IADD struct{ base.NoOperandsInstruction }
+// Add long
+type LADD struct{ base.NoOperandsInstruction }
 
 func (self *DADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -14,8 +20,7 @@ func (self *DADD) Execute(frame *rtda.Frame) {
 	stack.PushDouble(result)
 }
 
-// Add float
-type FADD struct{ base.NoOperandsInstruction }
+
 
 func (self *FADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -25,8 +30,7 @@ func (self *FADD) Execute(frame *rtda.Frame) {
 	stack.PushFloat(result)
 }
 
-// Add int
-type IADD struct{ base.NoOperandsInstruction }
+
 
 func (self *IADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -36,8 +40,7 @@ func (self *IADD) Execute(frame *rtda.Frame) {
 	stack.PushInt(result)
 }
 
-// Add long
-type LADD struct{ base.NoOperandsInstruction }
+
 
 func (self *LADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

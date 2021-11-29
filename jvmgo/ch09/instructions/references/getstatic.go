@@ -5,6 +5,9 @@ import "go_learn/jvmgo/ch09/rtda"
 import "go_learn/jvmgo/ch09/rtda/heap"
 
 // Get static field from class
+// 每个getfield，putfield,getstatic和putstatic指令的操作数都必须是常量池内的一个有效索引，这些索引所引用的常量池成员
+// 必须是CONSTANT_Fieldref类型
+
 type GET_STATIC struct{ base.Index16Instruction }
 
 func (self *GET_STATIC) Execute(frame *rtda.Frame) {

@@ -4,7 +4,18 @@ import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
 
 // Convert int to byte
+// i2x系列 指令把int变量强制转换成其他类型;
 type I2B struct{ base.NoOperandsInstruction }
+// Convert int to char
+type I2C struct{ base.NoOperandsInstruction }
+// Convert int to short
+type I2S struct{ base.NoOperandsInstruction }
+// Convert int to long
+type I2L struct{ base.NoOperandsInstruction }
+// Convert int to float
+type I2F struct{ base.NoOperandsInstruction }
+// Convert int to double
+type I2D struct{ base.NoOperandsInstruction }
 
 func (self *I2B) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -13,9 +24,6 @@ func (self *I2B) Execute(frame *rtda.Frame) {
 	stack.PushInt(b)
 }
 
-// Convert int to char
-type I2C struct{ base.NoOperandsInstruction }
-
 func (self *I2C) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
@@ -23,8 +31,7 @@ func (self *I2C) Execute(frame *rtda.Frame) {
 	stack.PushInt(c)
 }
 
-// Convert int to short
-type I2S struct{ base.NoOperandsInstruction }
+
 
 func (self *I2S) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -33,8 +40,7 @@ func (self *I2S) Execute(frame *rtda.Frame) {
 	stack.PushInt(s)
 }
 
-// Convert int to long
-type I2L struct{ base.NoOperandsInstruction }
+
 
 func (self *I2L) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -43,8 +49,7 @@ func (self *I2L) Execute(frame *rtda.Frame) {
 	stack.PushLong(l)
 }
 
-// Convert int to float
-type I2F struct{ base.NoOperandsInstruction }
+
 
 func (self *I2F) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -53,8 +58,7 @@ func (self *I2F) Execute(frame *rtda.Frame) {
 	stack.PushFloat(f)
 }
 
-// Convert int to double
-type I2D struct{ base.NoOperandsInstruction }
+
 
 func (self *I2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

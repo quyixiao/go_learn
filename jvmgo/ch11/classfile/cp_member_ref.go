@@ -6,6 +6,7 @@ CONSTANT_Fieldref_info {
     u2 class_index;
     u2 name_and_type_index;
 }
+
 CONSTANT_Methodref_info {
     u1 tag;
     u2 class_index;
@@ -20,6 +21,7 @@ CONSTANT_InterfaceMethodref_info {
 type ConstantFieldrefInfo struct{ ConstantMemberrefInfo }
 type ConstantMethodrefInfo struct{ ConstantMemberrefInfo }
 type ConstantInterfaceMethodrefInfo struct{ ConstantMemberrefInfo }
+
 
 type ConstantMemberrefInfo struct {
 	cp               ConstantPool
