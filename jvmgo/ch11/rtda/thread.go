@@ -13,7 +13,7 @@ JVM
 */
 type Thread struct {
 	pc    int // the address of the instruction currently being executed
-	stack *Stack
+	stack *Stack			//stack字段 是Stack结构体(Java虚拟机栈)指针
 	// todo
 }
 

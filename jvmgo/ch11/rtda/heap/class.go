@@ -14,11 +14,11 @@ type Class struct {
 	methods           []*Method
 	sourceFile        string							//最后实现Class结构体的SourceFile()方法和Method结构体的 GetLineNumber()
 	loader            *ClassLoader
-	superClass        *Class
-	interfaces        []*Class
-	instanceSlotCount uint
-	staticSlotCount   uint
-	staticVars        Slots
+	superClass        *Class					//类的超类
+	interfaces        []*Class				//接口指针
+	instanceSlotCount uint										//实例变量占据的空间大小
+	staticSlotCount   uint								//类变量数
+	staticVars        Slots					// 字段存放静态变量
 	initStarted       bool
 	jClass            *Object
 }

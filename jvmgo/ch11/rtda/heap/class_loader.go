@@ -23,7 +23,6 @@ func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 		verboseFlag: verboseFlag,
 		classMap:    make(map[string]*Class),
 	}
-
 	loader.loadBasicClasses()
 	loader.loadPrimitiveClasses()
 	return loader
@@ -167,6 +166,7 @@ func prepare(class *Class) {
 	allocAndInitStaticVars(class)
 }
 
+//计算实例变量占据的空间大小
 func calcInstanceFieldSlotIds(class *Class) {
 	slotId := uint(0)
 	if class.superClass != nil {
@@ -197,16 +197,19 @@ func calcStaticFieldSlotIds(class *Class) {
 	}
 	class.staticSlotCount = slotId
 }
-
+//初始化静态变量
 func allocAndInitStaticVars(class *Class) {
 	class.staticVars = newSlots(class.staticSlotCount)
 	for _, field := range class.fields {
-		if field.IsStatic() && field.IsFinal() {
+		if field.IsStatic() && field.IsFinal() {						//如果是静态变量或Final类型的变量，则初始化变量
 			initStaticFinalVar(class, field)
 		}
 	}
 }
 
+//因为Go语言会保证新创建的Slot结构体有默认值(num字段是 0，ref字段是nil)，而浮点数0编码之后和整数0相同，所以不用做任 何操作就可以保证
+//静态变量有默认初始值(数字类型是0，引用类型 是null)。如果静态变量属于基本类型或String类型，有final修饰符， 且它的值在编译期已知，
+//则该值存储在class文件常量池中。 initStaticFinalVar()函数从常量池中加载常量值，然后给静态变量赋值
 func initStaticFinalVar(class *Class, field *Field) {
 	vars := class.staticVars
 	cp := class.constantPool

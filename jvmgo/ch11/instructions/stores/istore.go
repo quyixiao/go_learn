@@ -34,7 +34,7 @@ type ISTORE_3 struct{ base.NoOperandsInstruction }
 func (self *ISTORE_3) Execute(frame *rtda.Frame) {
 	_istore(frame, 3)
 }
-
+// istore 命令的作用是从操作栈中弹出值，并存储到本地变量表中
 func _istore(frame *rtda.Frame, index uint) {
 	val := frame.OperandStack().PopInt()
 	frame.LocalVars().SetInt(index, val)

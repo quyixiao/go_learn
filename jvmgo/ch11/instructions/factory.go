@@ -448,7 +448,7 @@ func NewInstruction(opcode byte) base.Instruction {
 		// 的虚拟机可能要在每次循环时消耗更多的时间用于获取和解析这个操作数，因此使用隐式的操作数可以让编译后的代码更加简洁，更加高效
 		return iconst_0
 	case 0x04:
-		return iconst_1
+		return iconst_1			// 将1压入操作数栈
 	case 0x05:
 		return iconst_2
 	case 0x06:
@@ -471,7 +471,7 @@ func NewInstruction(opcode byte) base.Instruction {
 		return dconst_0
 	case 0x0f:
 		return dconst_1
-	case 0x10:
+	case 0x10:											// 16 * 1 + 0  = 16
 		return &BIPUSH{}
 	case 0x11:
 		return &SIPUSH{}
@@ -494,7 +494,7 @@ func NewInstruction(opcode byte) base.Instruction {
 	case 0x1a:
 		return iload_0
 	case 0x1b:
-		// iload_1指令的作用是将第一个局部变量压入到操作数栈
+		// iload_1指令的作用是将第一个局部变量压入到操作数栈  16 + 11 = 27
 		return iload_1
 	case 0x1c:
 		return iload_2
@@ -560,10 +560,10 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &ASTORE{}
 	case 0x3b:
 		return istore_0
-	case 0x3c:
+	case 0x3c:														// 3 * 16 + 12 = 60
 		// istore_1 指令的作用是从操作数栈中弹出一个int类型的值，并保存在第一个局部变量中
 		return istore_1
-	case 0x3d:
+	case 0x3d:									// 3 * 16 + 13 = 61
 		return istore_2
 	case 0x3e:
 		return istore_3

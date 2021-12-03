@@ -17,7 +17,7 @@ func catchErr(thread *rtda.Thread) {
 	}
 }
 
-//修改之后interpret()函数简单了许多，直接调用loop()函数进 入循环即可。
+//修改之后interpret()函数简单了许多，直接调用loop()函数进 入循环即可。loop()函数循环执行“计算pc、解码指令、执行指令”这三个步 骤，直到遇到错误!
 func loop(thread *rtda.Thread, logInst bool) {
 	reader := &base.BytecodeReader{}
 	for {
