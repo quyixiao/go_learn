@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 import "go_learn/jvmgo/ch11/instructions"
 import "go_learn/jvmgo/ch11/instructions/base"
 import "go_learn/jvmgo/ch11/rtda"
@@ -18,9 +21,18 @@ func catchErr(thread *rtda.Thread) {
 }
 
 //修改之后interpret()函数简单了许多，直接调用loop()函数进 入循环即可。loop()函数循环执行“计算pc、解码指令、执行指令”这三个步 骤，直到遇到错误!
+//1. 在每次循环开始，先拿到当前帧
+//2. pc从当前方法中解码出一条指令
+//3. 指令执行完毕之后
+//4. 判断Java虚拟机栈中是否还有 帧。如果没有则退出循环;
+
+// 4条指令都修改完毕了，但是新增加的代码做了些什么?先判断类的初始化是否已经开始，如果还没有，则需要调用类的初始化方法，
+// 并终止指令执行。但是由于此时指令已经执行到了一半，也就是说当前帧的nextPC字段已经指向下一条指令，所以需要修改 nextPC，
+// 让它重新指向当前指令。Frame结构体的RevertNextPC()方法做了这样的操作
 func loop(thread *rtda.Thread, logInst bool) {
 	reader := &base.BytecodeReader{}
 	for {
+
 		frame := thread.CurrentFrame()
 		pc := frame.NextPC()
 		thread.SetPC(pc)
@@ -32,9 +44,16 @@ func loop(thread *rtda.Thread, logInst bool) {
 		inst.FetchOperands(reader)
 		frame.SetNextPC(reader.PC())
 
-		if logInst {
-			logInstruction(frame, inst)
+
+
+		classNameB := frame.Method().Class().Name()
+
+		if(strings.Contains(classNameB,"jvmgo/book/ch06/MyObject")){
+				fmt.Println("==========MyObject========")
 		}
+
+		logInstruction(frame, inst)
+
 
 		// execute
 		inst.Execute(frame)

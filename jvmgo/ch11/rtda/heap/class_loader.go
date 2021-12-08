@@ -41,6 +41,7 @@ func (self *ClassLoader) loadBasicClasses() {
 
 func (self *ClassLoader) loadPrimitiveClasses() {
 	for primitiveType, _ := range primitiveTypes {
+		//loadPrimitiveClasses()方法加载void和基本类型的类
 		self.loadPrimitiveClass(primitiveType)
 	}
 }
@@ -64,7 +65,7 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 	}
 
 	var class *Class
-	if name[0] == '[' { // array class
+	if name[0] == '[' { // array class ,如果是数组类
 		class = self.loadArrayClass(name)
 	} else {
 		class = self.loadNonArrayClass(name)
@@ -83,9 +84,9 @@ func (self *ClassLoader) loadArrayClass(name string) *Class {
 		accessFlags: ACC_PUBLIC, // todo
 		name:        name,
 		loader:      self,
-		initStarted: true,
-		superClass:  self.LoadClass("java/lang/Object"),
-		interfaces: []*Class{
+		initStarted: true,						//因为数组类不需要 初始化，所以把initStarted字段设置成true。
+		superClass:  self.LoadClass("java/lang/Object"),	//数组类的超类是 java.lang.Object，
+		interfaces: []*Class{	//并且实现了java.lang.Cloneable和java.io.Serializable 接口。
 			self.LoadClass("java/lang/Cloneable"),
 			self.LoadClass("java/io/Serializable"),
 		},
@@ -97,6 +98,7 @@ func (self *ClassLoader) loadArrayClass(name string) *Class {
 func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 	data, entry := self.readClass(name)
 	class := self.defineClass(data)
+	// 为了确保安全性，Java虚拟机规范要求在执行类的任何代码之前对类进行严格的验证。
 	link(class)
 
 	if self.verboseFlag {
@@ -116,10 +118,14 @@ func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
 
 // jvms 5.3.5
 func (self *ClassLoader) defineClass(data []byte) *Class {
+	//方法首先调用parseClass()函数把class文件数据 转换成Class结构体
+	//Class结构体的superClass和interfaces字段存放 超类名和直接接口表，这些类名其实都是符号引用
 	class := parseClass(data)
 	hackClass(class)
 	class.loader = self
+	//除java.lang.Object以外，所有的类都有且仅有一个 超类。因此，除非是Object类，否则需要递归调用LoadClass()方法 加载它的超类。
 	resolveSuperClass(class)
+	//resolveInterfaces()函数递归调用 LoadClass()方法加载类的每一个直接接口
 	resolveInterfaces(class)
 	self.classMap[class.name] = class
 	return class
@@ -161,8 +167,14 @@ func verify(class *Class) {
 
 // jvms 5.4.2
 func prepare(class *Class) {
+	//函数计算实例字段的个数
 	calcInstanceFieldSlotIds(class)
+	//函数计算静态字段的个数
 	calcStaticFieldSlotIds(class)
+	//函数给类变量分配空间，然后给它们赋 予初始值
+	//因为Go语言会保证新创建的Slot结构体有默认值(num字段是 0，ref字段是nil)，而浮点数0编码之后和整数0相同，所以不用做任
+	//何操作就可以保证静态变量有默认初始值(数字类型是0，引用类型 是null)。如果静态变量属于基本类型或String类型，有final修饰符，
+	//且它的值在编译期已知，则该值存储在class文件常量池中。 initStaticFinalVar()函数从常量池中加载常量值，然后给静态变量赋值
 	allocAndInitStaticVars(class)
 }
 
@@ -176,6 +188,7 @@ func calcInstanceFieldSlotIds(class *Class) {
 		if !field.IsStatic() {
 			field.slotId = slotId
 			slotId++
+			//Field结构体的isLongOrDouble()方法返回字段是否是long或 double类型
 			if field.isLongOrDouble() {
 				slotId++
 			}

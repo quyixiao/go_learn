@@ -16,13 +16,12 @@ type LDC struct{ base.Index8Instruction }
 // 每个ldc2_w 指令的操作数都必须是常量池表内的一个有效索引，被此索引引用的常量池成员必须是CONSTANT_Long或CONSTANT_Double
 // 另外，紧随其后的那个常量池索引也必须是对常量池的一个有效索引，并且该索引处的常量池成员不允许使用
 type LDC2_W struct{ base.Index16Instruction }
+// Push item from run-time constant pool (wide index)
+type LDC_W struct{ base.Index16Instruction }
 
 func (self *LDC) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
 }
-
-// Push item from run-time constant pool (wide index)
-type LDC_W struct{ base.Index16Instruction }
 
 func (self *LDC_W) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
@@ -38,7 +37,7 @@ func _ldc(frame *rtda.Frame, index uint) {
 		stack.PushInt(c.(int32))
 	case float32:
 		stack.PushFloat(c.(float32))
-	case string:
+	case string: // 如果ldc试图从运行时常量池中加载字符串常量，则先通过常量拿到Go字符串，然后把它转成Java字符串实例并把引用推入操作数栈顶。
 		internedStr := heap.JString(class.Loader(), c.(string))
 		stack.PushRef(internedStr)
 	case *heap.ClassRef:

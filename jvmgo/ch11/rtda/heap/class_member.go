@@ -58,14 +58,17 @@ func (self *ClassMember) Class() *Class {
 
 // jvms 5.4.4
 func (self *ClassMember) isAccessibleTo(d *Class) bool {
+	//如果字段是public，则任何 类都可以访问。
 	if self.IsPublic() {
 		return true
 	}
 	c := self.class
+	//如果字段是protected，则只有子类和同一个包下的 类可以访问。
 	if self.IsProtected() {
 		return d == c || d.IsSubClassOf(c) ||
 			c.GetPackageName() == d.GetPackageName()
 	}
+	//如果字段有默认访问权限(非public，非protected，也 非privated)，则只有同一个包下的类可以访问。否则，字段是 private，只有声明这个字段的类才能访问。
 	if !self.IsPrivate() {
 		return c.GetPackageName() == d.GetPackageName()
 	}

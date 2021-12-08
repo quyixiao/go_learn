@@ -73,6 +73,7 @@ func (self *Class) IsImplements(iface *Class) bool {
 }
 
 // self extends iface
+//
 func (self *Class) isSubInterfaceOf(iface *Class) bool {
 	for _, superInterface := range self.interfaces {
 		if superInterface == iface || superInterface.isSubInterfaceOf(iface) {

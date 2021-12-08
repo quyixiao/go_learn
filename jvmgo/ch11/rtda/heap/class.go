@@ -20,7 +20,7 @@ type Class struct {
 	staticSlotCount   uint								//类变量数
 	staticVars        Slots					// 字段存放静态变量
 	initStarted       bool
-	jClass            *Object
+	jClass            *Object       //通过jClass字段，每个Class结构体实例都与一个类对象关联。
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -118,6 +118,7 @@ func (self *Class) isAccessibleTo(other *Class) bool {
 		self.GetPackageName() == other.GetPackageName()
 }
 
+//比如类名是java/lang/Object，则它的包名就是java/lang。如果类 定义在默认包中，它的包名是空字符串。
 func (self *Class) GetPackageName() string {
 	if i := strings.LastIndex(self.name, "/"); i >= 0 {
 		return self.name[:i]

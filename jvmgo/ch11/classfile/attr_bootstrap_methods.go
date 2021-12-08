@@ -11,6 +11,7 @@ BootstrapMethods_attribute {
     } bootstrap_methods[num_bootstrap_methods];
 }
 */
+
 type BootstrapMethodsAttribute struct {
 	bootstrapMethods []*BootstrapMethod
 }

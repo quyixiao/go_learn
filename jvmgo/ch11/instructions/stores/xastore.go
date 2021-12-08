@@ -7,21 +7,29 @@ import "go_learn/jvmgo/ch11/rtda/heap"
 // Store into reference array
 //和加载指令刚好相反，存储指令把变量从操作数栈顶弹出，然 后存入局部变量表
 type AASTORE struct{ base.NoOperandsInstruction }
+type BASTORE struct{ base.NoOperandsInstruction } // Store into byte or boolean array
+type CASTORE struct{ base.NoOperandsInstruction } // Store into char array
+type DASTORE struct{ base.NoOperandsInstruction }// Store into double array
+type FASTORE struct{ base.NoOperandsInstruction }  // Store into float array
+type LASTORE struct{ base.NoOperandsInstruction } // Store into long array
+type IASTORE struct{ base.NoOperandsInstruction } // Store into int array
+type SASTORE struct{ base.NoOperandsInstruction }// Store into short array
+
+
 
 func (self *AASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
-	ref := stack.PopRef()
-	index := stack.PopInt()
-	arrRef := stack.PopRef()
+	ref := stack.PopRef()		//要赋给数组元素的值
+	index := stack.PopInt()			//数组索引
+	arrRef := stack.PopRef()		//数组引用
 
-	checkNotNil(arrRef)
+	checkNotNil(arrRef)				//如果数组引用是null，则 抛出NullPointerException。
 	refs := arrRef.Refs()
-	checkIndex(len(refs), index)
+	checkIndex(len(refs), index)		//如果数组索引小于0或者大于等于数组 长度，则抛出ArrayIndexOutOfBoundsException异常。
 	refs[index] = ref
 }
 
-// Store into byte or boolean array
-type BASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *BASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -35,8 +43,7 @@ func (self *BASTORE) Execute(frame *rtda.Frame) {
 	bytes[index] = int8(val)
 }
 
-// Store into char array
-type CASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *CASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -50,8 +57,7 @@ func (self *CASTORE) Execute(frame *rtda.Frame) {
 	chars[index] = uint16(val)
 }
 
-// Store into double array
-type DASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *DASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -65,8 +71,7 @@ func (self *DASTORE) Execute(frame *rtda.Frame) {
 	doubles[index] = float64(val)
 }
 
-// Store into float array
-type FASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *FASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -80,8 +85,7 @@ func (self *FASTORE) Execute(frame *rtda.Frame) {
 	floats[index] = float32(val)
 }
 
-// Store into int array
-type IASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *IASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -95,8 +99,7 @@ func (self *IASTORE) Execute(frame *rtda.Frame) {
 	ints[index] = int32(val)
 }
 
-// Store into long array
-type LASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *LASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -110,8 +113,7 @@ func (self *LASTORE) Execute(frame *rtda.Frame) {
 	longs[index] = int64(val)
 }
 
-// Store into short array
-type SASTORE struct{ base.NoOperandsInstruction }
+
 
 func (self *SASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

@@ -15,6 +15,7 @@ func newMethodRef(cp *ConstantPool, refInfo *classfile.ConstantMethodrefInfo) *M
 }
 
 func (self *MethodRef) ResolvedMethod() *Method {
+	// 如果还没有解析过符号引用，调用resolveMethodRef()方法进 行解析，否则直接返回方法指针。
 	if self.method == nil {
 		self.resolveMethodRef()
 	}
@@ -25,10 +26,13 @@ func (self *MethodRef) ResolvedMethod() *Method {
 func (self *MethodRef) resolveMethodRef() {
 	d := self.cp.class
 	c := self.ResolvedClass()
+	//如果类D想通过方法符号引用访问类C的某个方法，先要解析
+	// 符号引用得到类C。如果C是接口，则抛出 IncompatibleClassChangeError异常
 	if c.IsInterface() {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
-
+	//否则根据方法名和描述符查找 方法。如果找不到对应的方法，则抛出NoSuchMethodError异常，否 则检查类D是否有权限访问该方法。
+	//如果没有，则抛出 IllegalAccessError异常。
 	method := lookupMethod(c, self.name, self.descriptor)
 	if method == nil {
 		panic("java.lang.NoSuchMethodError")

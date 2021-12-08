@@ -7,30 +7,26 @@ import "go_learn/jvmgo/ch11/rtda"
 // 加载指令从局部变量表获取变量，然后推入操作数栈顶。
 // aload系列指令 操作引用类型变量
 type ALOAD struct{ base.Index8Instruction }
+type ALOAD_0 struct{ base.NoOperandsInstruction }
+type ALOAD_1 struct{ base.NoOperandsInstruction }
+type ALOAD_2 struct{ base.NoOperandsInstruction }
+type ALOAD_3 struct{ base.NoOperandsInstruction }
 
 func (self *ALOAD) Execute(frame *rtda.Frame) {
 	_aload(frame, self.Index)
 }
 
-type ALOAD_0 struct{ base.NoOperandsInstruction }
-
 func (self *ALOAD_0) Execute(frame *rtda.Frame) {
 	_aload(frame, 0)
 }
-
-type ALOAD_1 struct{ base.NoOperandsInstruction }
 
 func (self *ALOAD_1) Execute(frame *rtda.Frame) {
 	_aload(frame, 1)
 }
 
-type ALOAD_2 struct{ base.NoOperandsInstruction }
-
 func (self *ALOAD_2) Execute(frame *rtda.Frame) {
 	_aload(frame, 2)
 }
-
-type ALOAD_3 struct{ base.NoOperandsInstruction }
 
 func (self *ALOAD_3) Execute(frame *rtda.Frame) {
 	_aload(frame, 3)

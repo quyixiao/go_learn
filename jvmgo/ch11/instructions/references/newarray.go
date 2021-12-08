@@ -18,6 +18,8 @@ const (
 
 // Create new array
 type NEW_ARRAY struct {
+	//newarray指令需要两个操作数。第一个操作数是一个uint8整 数，在字节码中紧跟在指令操作码后面，表示要创建哪种类型的数 组。
+	// Java虚拟机规范把这个操作数叫作atype，并且规定了它的有效 值 ,如 array type 常量
 	atype uint8
 }
 
@@ -26,11 +28,13 @@ func (self *NEW_ARRAY) FetchOperands(reader *base.BytecodeReader) {
 }
 func (self *NEW_ARRAY) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
+	//newarray指令的第二个操作数是count，从操作数栈中弹出，表示数组长度。
 	count := stack.PopInt()
+	//如果count小于0，则抛出NegativeArraySizeException异常
 	if count < 0 {
 		panic("java.lang.NegativeArraySizeException")
 	}
-
+	//否则 根据atype值使用当前类的类加载器加载数组类，然后创建数组对象并推入操作数栈
 	classLoader := frame.Method().Class().Loader()
 	arrClass := getPrimitiveArrayClass(classLoader, self.atype)
 	arr := arrClass.NewArray(uint(count))

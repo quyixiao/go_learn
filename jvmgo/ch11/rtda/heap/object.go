@@ -3,7 +3,7 @@ package heap
 type Object struct {
 	class *Class
 	data  interface{} // Slots for Object, []int32 for int[] ...
-	extra interface{}
+	extra interface{}      //extra字段用来记录Object结构体实例的额外信息
 }
 
 // create normal (non-array) object
@@ -41,6 +41,7 @@ func (self *Object) GetRefVar(name, descriptor string) *Object {
 	slots := self.data.(Slots)
 	return slots.GetRef(field.slotId)
 }
+
 func (self *Object) SetRefVar(name, descriptor string, ref *Object) {
 	field := self.class.getField(name, descriptor, false)
 	slots := self.data.(Slots)

@@ -40,6 +40,6 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	if methodToBeInvoked == nil || methodToBeInvoked.IsAbstract() {
 		panic("java.lang.AbstractMethodError")
 	}
-
+	//从对象的类中查找真正要调用的方法。如果找不到方法，或者 找到的是抽象方法，则需要抛出AbstractMethodError异常，否则一 切正常，调用方法。
 	base.InvokeMethod(frame, methodToBeInvoked)
 }

@@ -9,7 +9,9 @@ func (self *Class) ComponentClass() *Class {
 	return self.loader.LoadClass(componentClassName)
 }
 
+//NewArray()方法专门用来创建数组对象
 func (self *Class) NewArray(count uint) *Object {
+	//如果类并不是数组类，就调用panic()函数终止程序执行，否则根据数组类型创建数组对象。
 	if !self.IsArray() {
 		panic("Not array class: " + self.name)
 	}

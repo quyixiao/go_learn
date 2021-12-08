@@ -10,13 +10,13 @@ type AALOAD struct{ base.NoOperandsInstruction }
 
 func (self *AALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
-	index := stack.PopInt()
-	arrRef := stack.PopRef()
+	index := stack.PopInt()           //首先从操作数栈中弹出第一个操作数:数组索引
+	arrRef := stack.PopRef()		  //弹出第二个操作数:数组引用
 
-	checkNotNil(arrRef)
+	checkNotNil(arrRef)			//如果数组引用是null，则抛出 NullPointerException异常。
 	refs := arrRef.Refs()
-	checkIndex(len(refs), index)
-	stack.PushRef(refs[index])
+	checkIndex(len(refs), index) //如果数组索引小于0，或者大于等于数组长度，则抛出 ArrayIndexOutOfBoundsException
+	stack.PushRef(refs[index])		//如果一切正常，则按索引取出数组元素，推入操作数栈顶。
 }
 
 // Load byte or boolean from array

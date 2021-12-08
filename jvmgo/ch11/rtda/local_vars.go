@@ -3,6 +3,7 @@ package rtda
 import "math"
 import "go_learn/jvmgo/ch11/rtda/heap"
 
+// LocalVars实例就像一个数组，这个数组的每一个元素 都足够容纳一个int、float或引用值。要放入double或者long值，需要 相邻的两个元素。这个结构体不是正好也可以用来表示类变量和实 例变量吗?
 type LocalVars []Slot
 
 func newLocalVars(maxLocals uint) LocalVars {

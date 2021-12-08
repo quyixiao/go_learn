@@ -34,10 +34,12 @@ func getComponentClassName(className string) string {
 // int  => I
 // XXX  => LXXX;
 func toDescriptor(className string) string {
+	//如果是数组类名，描述符就是类名，直接返回即可。
 	if className[0] == '[' {
 		// array
 		return className
 	}
+	//如果是基本类型名，返回对应的类型描述符，否则肯定是普通的类名，前面加上方括号，结尾加上分号即可得到类型描述符。
 	if d, ok := primitiveTypes[className]; ok {
 		// primitive
 		return d
@@ -46,9 +48,9 @@ func toDescriptor(className string) string {
 	return "L" + className + ";"
 }
 
-// [XXX  => [XXX
-// LXXX; => XXX
-// I     => int
+// [XXX  => [XXX        如果类型描述符以方括号开头，那么肯定是数组，描述符即是 类名。
+// LXXX; => XXX       如果类型描述符以L开头，那么肯定是类描述符，去掉开头的 L和末尾的分号即是类名
+// I     => int   否则判断是否是基本类型的描述符，如 果是，返回基本类型名称，否则调用panic()函数终止程序执行。
 func toClassName(descriptor string) string {
 	if descriptor[0] == '[' {
 		// array

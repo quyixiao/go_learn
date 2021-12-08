@@ -32,6 +32,7 @@ func newMethod(class *Class, cfMethod *classfile.MemberInfo) *Method {
 	md := parseMethodDescriptor(method.descriptor)
 	method.parsedDescriptor = md
 	method.calcArgSlotCount(md.parameterTypes)
+	//先计算argSlotCount字段，如果是本地 方法，则注入字节码和其他信息。
 	if method.IsNative() {
 		method.injectCodeAttribute(md.returnType)
 	}
@@ -66,8 +67,9 @@ func (self *Method) calcArgSlotCount(paramTypes []string) {
 }
 
 func (self *Method) injectCodeAttribute(returnType string) {
-	self.maxStack = 4 // todo
+	self.maxStack = 4 // 因为本地方法帧的 局部变量表只用来存放参数值，所以把argSlotCount赋给maxLocals 字段刚好。
 	self.maxLocals = self.argSlotCount
+	//至于code字段，也就是本地方法的字节码，第一条指令 都是0xFE，第二条指令则根据函数的返回值选择相应的返回指令。
 	switch returnType[0] {
 	case 'V':
 		self.code = []byte{0xfe, 0xb1} // return

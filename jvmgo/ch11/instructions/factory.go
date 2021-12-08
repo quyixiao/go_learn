@@ -33,7 +33,7 @@ import . "go_learn/jvmgo/ch11/instructions/stores"
 //dconst_1 将double类型常量1压入栈
 //bipush 将一个8位带符号整数压入栈
 //sipush 将16位带符号整数压入栈
-//ldc 把常量池中的项压入栈
+//ldc 把常量池中的项压入栈 , ldc系列指令把运行时常量池中的常量推到操作数栈顶
 //ldc_w 把常量池中的项压入栈（使用宽索引）
 //ldc2_w 把常量池中long类型或者double类型的项压入栈（使用宽索引）
 //从栈中的局部变量中装载值的指令
@@ -181,10 +181,10 @@ import . "go_learn/jvmgo/ch11/instructions/stores"
 //new 创建一个新对象
 //checkcast 确定对象为所给定的类型
 //getfield 从对象中获取字段
-//putfield 设置对象中字段的值
-//getstatic 从类中获取静态字段
-//putstatic 设置类中静态字段的值
-//instanceof 判断对象是否为给定的类型
+//putfield [putfield和getfield用 于存取实例变量;]
+//getstatic
+//putstatic  [putstatic和getstatic指令用于存取静态变量]
+//instanceof [指令用于判断对象是否属于 某种类型;]
 //数组操作指令
 //newarray 分配数据成员类型为基本上数据类型的新数组
 //anewarray 分配数据成员类型为引用类型的新数组
@@ -475,6 +475,7 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &BIPUSH{}
 	case 0x11:
 		return &SIPUSH{}
+		// ldc系列指令从运行时常量池中加载常量值，并把它推入操作 数栈。ldc系列指令属于常量类指令，共3条。其中ldc和ldc_w指令用 于加载int、float和字符串常量
 	case 0x12:
 		return &LDC{}
 	case 0x13:

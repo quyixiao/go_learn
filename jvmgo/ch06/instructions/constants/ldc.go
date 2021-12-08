@@ -7,13 +7,16 @@ import (
 
 // Push item from run-time constant pool
 type LDC struct{ base.Index8Instruction }
+// Push item from run-time constant pool (wide index)
+type LDC_W struct{ base.Index16Instruction }
+// Push long or double from run-time constant pool (wide index)
+type LDC2_W struct{ base.Index16Instruction }
+
 
 func (self *LDC) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
 }
 
-// Push item from run-time constant pool (wide index)
-type LDC_W struct{ base.Index16Instruction }
 
 func (self *LDC_W) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
@@ -37,8 +40,7 @@ func _ldc(frame *rtda.Frame, index uint) {
 	}
 }
 
-// Push long or double from run-time constant pool (wide index)
-type LDC2_W struct{ base.Index16Instruction }
+
 
 //先从当前类的运行时常量池中取出常量。如果是int或float常 量，则提取出常量值，则推入操作数栈。其他情况还无法处理，暂时调用panic()
 //函数终止程序执行。ldc_2w指令的Execute()方法单独实现
